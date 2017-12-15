@@ -40,7 +40,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .swiper-container {
     position: relative;
     width: 100%;

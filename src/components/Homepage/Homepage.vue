@@ -153,7 +153,6 @@
       </div>
     </section>
     <section class="footer">
-
     </section>
   </div>
 </template>
@@ -312,7 +311,7 @@
           {src: require('assets/goods/2-2.png'), text: '商品百贸'},
           {src: require('assets/goods/2-3.png'), text: '箱包配饰'},
           {src: require('assets/goods/2-4.png'), text: '医疗保健'},
-          {src: require('assets/goods/2-5.png'), text: '母音玩具'},
+          {src: require('assets/goods/2-5.png'), text: '母婴玩具'},
           {src: require('assets/goods/2-6.png'), text: ''}
         ],
         news: [

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <loading ref="loading"></loading>
     <top></top>
     <side></side>
     <router-view></router-view>
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+  import Loading from '@/components/Loading/Loading'
   import './assets/reset.css'
   import Top from '@/components/Top/Top'
   import Side from '@/components/Side/Side'
@@ -15,9 +17,13 @@
   export default {
     name: 'app',
     components: {
+      loading: Loading,
       top: Top,
       side: Side,
       foot: Foot
+    },
+    mounted () {
+      this.$refs.loading.$refs.loadingPage.classList.remove('load')
     }
   }
 </script>

@@ -41,12 +41,23 @@
 <script>
   export default {
     name: 'Top',
+    data () {
+      return {
+        lastScrollY: 0
+      }
+    },
     methods: {
       handlerScroll () {
-        this.scrolled = window.scrollY
-        if (this.scrolled > 770) {
-          this.$refs.header.classList.add('active')
-          this.$refs.logo.setAttribute('src', require('assets/logo.png'))
+        let st = window.scrollY
+        if (window.scrollY > 770) {
+          if (st < this.lastScrollY) {
+            this.$refs.header.style.display = 'flex'
+            this.$refs.header.classList.add('active')
+            this.$refs.logo.setAttribute('src', require('assets/logo.png'))
+          } else {
+            this.$refs.header.style.display = 'none'
+          }
+          this.lastScrollY = st
         } else {
           this.$refs.header.classList.remove('active')
           this.$refs.logo.setAttribute('src', require('assets/logo_trs.png'))
@@ -59,7 +70,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .header {
     position: fixed;
     width: 100%;
