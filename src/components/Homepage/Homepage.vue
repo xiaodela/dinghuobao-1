@@ -690,6 +690,7 @@
             background-size: cover;
             height: 250px;
             overflow: hidden;
+            cursor: pointer;
             &:hover {
               .title {
                 display: none;
@@ -782,6 +783,7 @@
             height: 250px;
             overflow: hidden;
             transition: transform 0.25s ease;;
+            cursor: pointer;
             &:hover img {
               transform: scale(1.2);
             }
