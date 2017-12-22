@@ -46,14 +46,14 @@
       <h2 class="title">像电商平台一样展示您的商品</h2>
       <div class="content">
         <transition-group name="slide" class="items" tag="ul">
-          <li class="item" v-for="(slide,index) in slides" :key="index">
+          <li class="item" v-for="(slide, index) in slides" v-show="index === nowIndex" :key="index" @mouseover="clearInv" @mouseout="runInv">
             <h3 class="title">{{ slide.text }}</h3>
             <p class="text">{{ slide.description }}</p>
             <img :src="slide.src">
           </li>
         </transition-group>
-        <img src="./pre.png" class="pre" @click="previous">
-        <img src="./next.png" class="next" @click="next">
+        <img src="./pre.png" class="pre" @click="goto(preIndex)">
+        <img src="./next.png" class="next" @click="goto(nextIndex)">
       </div>
     </section>
     <section class="fix">
@@ -123,13 +123,22 @@
           a[k].classList.remove('active')
         }
       },
-      next () {
-        const first = this.slides.shift()
-        this.slides = this.slides.concat(first)
+      goto (index) {
+        if (index !== this.nowIndex) {
+          this.isShow = false
+          setTimeout(() => {
+            this.isShow = true
+            this.nowIndex = index
+          }, 10)
+        }
       },
-      previous () {
-        const last = this.slides.pop()
-        this.slides = [last].concat(this.slides)
+      runInv () {
+        this.invId = setInterval(() => {
+          this.goto(this.nextIndex)
+        }, 3000)
+      },
+      clearInv () {
+        clearInterval(this.invId)
       }
     },
     computed: {
@@ -156,6 +165,9 @@
         .catch(function (error) {
           console.log(error)
         })
+    },
+    mounted () {
+      this.runInv()
     }
   }
 </script>
@@ -353,16 +365,26 @@
           display: flex;
           flex-direction: row;
           overflow: hidden;
+          .slide-enter-active {
+            transition: all 0.5s ease;
+          }
+          .slide-leave-active {
+            transition: all 0.5s ease;
+          }
+          .slide-enter {
+            transform: translateX(0);
+          }
+          .slide-enter-to {
+            transform: translateX(-100%);
+          }
+          .slide-leave {
+            transform: translateX(0);
+          }
+          .slide-leave-to {
+            transform: translateX(-100%);
+          }
           .item {
-            opacity: 1;
-            transform: translateZ(0) scale(1.0, 1.0);
-            transition: transform 0.3s ease-in-out;
-            &:first-child {
-              opacity: 1;
-            }
-            &:last-child {
-              opacity: 0;
-            }
+            width: 100%;
             .title {
               margin-bottom: 20px;
               font-size: 20px;
