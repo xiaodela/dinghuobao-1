@@ -42,6 +42,27 @@
         </div>
       </div>
     </section>
+    <section class="slide">
+      <h2 class="title">像电商平台一样展示您的商品</h2>
+      <div class="content">
+        <transition-group name="slide" class="items" tag="ul">
+          <li class="item" v-for="(slide,index) in slides" :key="index">
+            <h3 class="title">{{ slide.text }}</h3>
+            <p class="text">{{ slide.description }}</p>
+            <img :src="slide.src">
+          </li>
+        </transition-group>
+        <img src="./pre.png" class="pre" @click="previous">
+        <img src="./next.png" class="next" @click="next">
+      </div>
+    </section>
+    <section class="fix">
+      <div class="fix-wrapper">
+        <h2 class="title">企业用的，就用成熟的</h2>
+        <p class="text">七年沉淀，五百多次实地调研，三千多项功能升级，七十万用户实际应用检验</p>
+        <a href="javascript: void(0)" class="link">免费开通，享新手礼包</a>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -53,6 +74,8 @@
     data () {
       return {
         i: 0,
+        isShow: true,
+        nowIndex: 0,
         xxx: require('@/components/Goods/trans1.png'),
         mallmsg: [],
         imgsrc: [
@@ -60,6 +83,28 @@
           {src: require('@/components/Goods/trans2.png')},
           {src: require('@/components/Goods/trans3.png')},
           {src: require('@/components/Goods/trans4.png')}
+        ],
+        slides: [
+          {
+            src: require('@/components/Goods/slide1.png'),
+            text: '不同的规格，不同的价格',
+            description: '红色、黑色、大码、小码不同规格随意搭配，规格不同价格当然也不同！'
+          },
+          {
+            src: require('@/components/Goods/slide2.png'),
+            text: '双单位、多仓库一切如您所需',
+            description: '支持大小单位转换，按只按箱均可订货，支持多仓库发货及更高数字精度。'
+          },
+          {
+            src: require('@/components/Goods/slide3.png'),
+            text: '展示商品何须频繁更换产品图册',
+            description: '瞬间变身大牌商城，快捷简便的批量订货方式，客户更易上手。'
+          },
+          {
+            src: require('@/components/Goods/slide4.png'),
+            text: '价格按等级、按订货量或者指定',
+            description: '是按客户的等级定价、还是订的越多越优惠，甚至单独指定价格，随您！'
+          }
         ]
       }
     },
@@ -76,6 +121,30 @@
         }
         for (let k = 0; k < a.length; k++) {
           a[k].classList.remove('active')
+        }
+      },
+      next () {
+        const first = this.slides.shift()
+        this.slides = this.slides.concat(first)
+      },
+      previous () {
+        const last = this.slides.pop()
+        this.slides = [last].concat(this.slides)
+      }
+    },
+    computed: {
+      preIndex () {
+        if (this.nowIndex === 0) {
+          return this.slides.length - 1
+        } else {
+          return this.nowIndex - 1
+        }
+      },
+      nextIndex () {
+        if (this.nowIndex === this.slides.length - 1) {
+          return 0
+        } else {
+          return this.nowIndex + 1
         }
       }
     },
@@ -257,6 +326,100 @@
               color: #fff;
               background-color: #EA5B24;
             }
+          }
+        }
+      }
+    }
+    .slide {
+      padding-top: 54px;
+      width: 100%;
+      background: url("./bg123.jpg") no-repeat center;
+      background-size: cover;
+      > .title {
+        margin-bottom: 48px;
+        font-size: 30px;
+        font-weight: 500;
+        text-align: center;
+        color: #fff;
+      }
+      .content {
+        position: relative;
+        margin: auto;
+        width: 1200px;
+        .items {
+          margin: auto;
+          width: 1000px;
+          height: 675px;
+          display: flex;
+          flex-direction: row;
+          overflow: hidden;
+          .item {
+            opacity: 1;
+            transform: translateZ(0) scale(1.0, 1.0);
+            transition: transform 0.3s ease-in-out;
+            &:first-child {
+              opacity: 1;
+            }
+            &:last-child {
+              opacity: 0;
+            }
+            .title {
+              margin-bottom: 20px;
+              font-size: 20px;
+              font-weight: 500;
+              text-align: center;
+              color: #fff;
+            }
+            .text {
+              font-size: 14px;
+              font-weight: 400;
+              text-align: center;
+              color: #fff;
+            }
+          }
+        }
+        .pre {
+          position: absolute;
+          left: 0;
+          bottom: 300px;
+        }
+        .next {
+          position: absolute;
+          right: 0;
+          bottom: 300px;
+        }
+      }
+    }
+    .fix {
+      position: relative;
+      width: 100%;
+      height: 354px;
+      background: url("../../assets/fix.jpg") no-repeat top fixed;
+      background-size: cover;
+      .fix-wrapper {
+        padding-top: 105px;
+        text-align: center;
+        color: #fff;
+        .title {
+          margin-bottom: 25px;
+          font-size: 32px;
+          font-weight: 400;
+        }
+        .text {
+          margin-bottom: 35px;
+          font-size: 16px;
+        }
+        .link {
+          display: block;
+          margin: auto;
+          width: 250px;
+          height: 45px;
+          line-height: 45px;
+          color: #fff;
+          background: #F58A36;
+          border-radius: 5px;
+          &:hover {
+            background: #EA5B24;
           }
         }
       }
